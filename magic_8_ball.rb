@@ -1,0 +1,105 @@
+
+require "colorize"
+
+class MagicEightBall
+def initialize
+@answers = ["It is certain",
+"It is decidedly so",
+"Without a doubt",
+"Yes definitely",
+"You may rely on it",
+"As I see it, yes",
+"Most likely",
+"Outlook good",
+"Yes",
+"Signs point to yes",
+"Reply hazy try again",
+"Ask again later",
+"Better not tell you now",
+"Cannot predict now",
+"Concentrate and ask again",
+"Don't count on it",
+"My reply is no",
+"My sources say no",
+"Outlook not so good",
+"Very doubtful"]
+show_menu
+end
+
+def show_menu
+puts "MENU:".colorize(:cyan)
+puts "1) Ask a question".colorize(:yellow)
+puts "2) Add answers to Magic 8 Ball".colorize(:yellow)
+puts "3) View all answers".colorize(:yellow)
+puts "4) Exit".colorize(:yellow)
+puts "Make a selection.".colorize(:cyan)
+choice = gets.strip
+case choice
+when "add_answers"
+  add_answers
+when "print_answers"
+  view_answers
+else
+@choice = choice.to_i
+selection
+end
+end
+
+def selection
+  case @choice
+  when 1
+    ask_question
+  when 2
+    add_answers
+  when 3
+    view_answers
+  when 4
+      puts "Bye!"
+  else 
+    puts "Please choose a number between 1 and 4"
+    puts 
+    puts
+    show_menu
+  end
+end
+
+def ask_question
+  puts "What's your question?!"
+  question = gets.strip
+  puts @answers.sample.colorize(:light_blue)
+  puts
+  puts
+  sleep(2)
+  show_menu
+end
+
+def add_answers
+  puts "What answer do you want to add?"
+  new_answer = gets.strip.downcase
+  @small_answers = @answers.map(&:downcase)
+  if @small_answers.include? new_answer
+    puts "That answer already exists!"
+    puts
+    puts
+    sleep(2)
+  else
+  @answers << new_answer
+  print "'#{new_answer}'".colorize(:yellow)
+  print " has been added to your answer choices."
+  sleep(2)
+  end
+  show_menu
+end
+
+def view_answers
+  sleep(1)
+  @answers.each do |answer|
+    puts "#{answer}"
+  end
+  sleep(2)
+  show_menu
+end
+
+end
+
+user = MagicEightBall.new
